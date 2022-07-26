@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import icsToJson from "ics-to-json-extended";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Stack from "@mui/material/Stack";
+import CloudUpload from "@mui/icons-material/CloudUpload";
+import Tabs from "../components/Tabs";
+import SelectInput from "@mui/material/Select/SelectInput";
+import { DataContext } from "../contexts/DataContext";
 
 const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [file, setFile] = useState({});
+  const [reload, setReload] = useState(0);
 
-  useEffect(() => {
-    const getData = async () => {
-      console.log(goodArrayToResults(await fileToArray()));
-      return await fileToArray();
-    };
-    getData();
-    //console.log(getData());
-    //console.log(goodArrayToResults(getData()));
-  }, [selectedFile]);
+  const getData = async () => {
+    //file = goodArrayToResults(await fileToArray());
+    return await goodArrayToResults(await fileToArray());
+  };
 
   const fileToArray = async () => {
     let arrayEvent = [];
@@ -101,20 +106,48 @@ const Home = () => {
     return data;
   };
 
+  useEffect(() => {
+    getData().then((data) => {
+      if (selectedFile != null && reload == 0) {
+        setFile(data);
+        setReload(1);
+      }
+      if (reload != 0) {
+        setFile(data);
+      }
+      if (selectedFile != null && reload != 0) {
+        setSelectedFile(null);
+        setReload(0);
+      }
+      //console.log(file);
+    });
+    //console.log(file);
+    //console.log(goodArrayToResults(getData()));
+  }, [selectedFile, reload]);
+
   return (
     <div>
-      <h1>bonjour</h1>
-      <form>
+      <Button variant="contained" component="label">
+        Upload
         <input
+          hidden
+          accept=".ics"
           type="file"
           onChange={(e) => setSelectedFile(e.target.files[0])}
         />
-      </form>
-      {selectedFile == null ? (
-        ""
-      ) : (
-        <button onClick={() => myConvert(selectedFile)}></button>
-      )}
+      </Button>
+      <IconButton color="primary" aria-label="upload picture" component="label">
+        <input
+          hidden
+          accept=".ics"
+          type="file"
+          onChange={(e) => setSelectedFile(e.target.files[0])}
+        />
+        <CloudUpload />
+      </IconButton>
+      <DataContext.Provider value={{ file: file }}>
+        <Tabs />
+      </DataContext.Provider>
     </div>
   );
 };
