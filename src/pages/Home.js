@@ -9,6 +9,7 @@ import CloudUpload from "@mui/icons-material/CloudUpload";
 import Tabs from "../components/Tabs";
 import SelectInput from "@mui/material/Select/SelectInput";
 import { DataContext } from "../contexts/DataContext";
+import { fontGrid } from "@mui/material/styles/cssUtils";
 
 const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -62,11 +63,14 @@ const Home = () => {
             res[RegExp.$1.trim()].duration += eventArray[e].durationMiliseconds;
             res[RegExp.$1.trim()].occurence += 1;
             if (RegExp.$3.trim() in res[RegExp.$1.trim()].subEvents) {
-              res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()] +=
+              res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()].duration +=
                 eventArray[e].durationMiliseconds;
+              res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()].occurence += 1;
             } else {
-              res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()] =
-                eventArray[e].durationMiliseconds;
+              res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()] = {
+                duration: eventArray[e].durationMiliseconds,
+                occurence: 1,
+              };
             }
           } else {
             res[RegExp.$1.trim()] = {
@@ -74,8 +78,10 @@ const Home = () => {
               subEvents: {},
               occurence: 1,
             };
-            res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()] =
-              eventArray[e].durationMiliseconds;
+            res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()] = {
+              duration: eventArray[e].durationMiliseconds,
+              occurence: 1,
+            };
           }
         } else if (eventArray[e].summary.trim() in res) {
           res[eventArray[e].summary.trim()].duration +=
@@ -92,6 +98,9 @@ const Home = () => {
     }
     for (let e in res) {
       res[e].duration /= 1000 * 60 * 60;
+      for (let sub in res[e].subEvents) {
+        res[e].subEvents[sub].duration /= 1000 * 60 * 60;
+      }
     }
     return res;
   };

@@ -6,6 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useEffect, useState, useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
+import CollapsibleTable from "./CollapsibleTable";
 
 export default function Tabs() {
   const [value, setValue] = useState("1");
@@ -19,20 +20,42 @@ export default function Tabs() {
 
   const objectToArray = () => {
     let res = [];
+    let i = 0;
     Object.keys(file).map((e) => {
       res.push({
         name: e,
         duration: Math.round(file[e].duration * 10) / 10,
         occurence: file[e].occurence,
-        subEvents: file[e].subEvents,
+        durPerOccurence:
+          Math.round((file[e].duration * 10) / file[e].occurence) / 10,
+        subEvents: [],
       });
+      Object.keys(file[e].subEvents).map((sub) => {
+        res[i].subEvents.push({
+          name: sub,
+          duration: Math.round(file[e].subEvents[sub].duration * 10) / 10,
+          occurence: file[e].subEvents[sub].occurence,
+          durPerOccurence:
+            Math.round(
+              (file[e].subEvents[sub].duration * 10) /
+                file[e].subEvents[sub].occurence
+            ) / 10,
+        });
+      });
+      i += 1;
     });
     return res;
   };
 
   useEffect(() => {
     setFileArray(objectToArray(file));
-    console.log(fileArray);
+    console.log(
+      fileArray.sort(function compare(a, b) {
+        if (a.duration < b.duration) return 1;
+        if (a.duration > b.duration) return -1;
+        return 0;
+      })
+    );
   }, [file]);
 
   return (
@@ -48,38 +71,26 @@ export default function Tabs() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          {fileArray.length > 0
-            ? fileArray
-                .sort(function compare(a, b) {
-                  if (a.duration < b.duration) return 1;
-                  if (a.duration > b.duration) return -1;
-                  return 0;
-                })
-                .map((e) => {
-                  return (
-                    <h1>
-                      {e.name} {e.duration}h {e.occurence}
-                    </h1>
-                  );
-                })
-            : "Merci de sélectionner votre fichier ICS"}
+          {fileArray.length > 0 ? (
+            <CollapsibleTable
+              fileArray={fileArray}
+              key={fileArray[0].name}
+              sort={"duration"}
+            />
+          ) : (
+            "Merci de sélectionner votre fichier ICS"
+          )}
         </TabPanel>
         <TabPanel value="2">
-          {fileArray.length > 0
-            ? fileArray
-                .sort(function compare(a, b) {
-                  if (a.occurence < b.occurence) return 1;
-                  if (a.occurence > b.occurence) return -1;
-                  return 0;
-                })
-                .map((e) => {
-                  return (
-                    <h1>
-                      {e.name} {e.duration}h {e.occurence}
-                    </h1>
-                  );
-                })
-            : "Merci de sélectionner votre fichier ICS"}
+          {fileArray.length > 0 ? (
+            <CollapsibleTable
+              fileArray={fileArray}
+              key={fileArray[0].name}
+              sort={"occurence"}
+            />
+          ) : (
+            "Merci de sélectionner votre fichier ICS"
+          )}
         </TabPanel>
       </TabContext>
     </Box>
