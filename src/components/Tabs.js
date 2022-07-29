@@ -7,12 +7,19 @@ import TabPanel from "@mui/lab/TabPanel";
 import { useEffect, useState, useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
 import CollapsibleTable from "./CollapsibleTable";
+import TextField from "@mui/material/TextField";
+import { latinize } from "../utils/accent";
 
 export default function Tabs() {
   const [value, setValue] = useState("1");
   const [reload, setReload] = useState("0");
   const [fileArray, setFileArray] = useState([]);
+  const [fileArrayFiltered, setFileArrayFiltered] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [searchBarUsed, setSearchBarUsed] = useState(false);
   const { file } = useContext(DataContext);
+  const { minDuration } = useContext(DataContext);
+  const { minOccurence } = useContext(DataContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -21,45 +28,82 @@ export default function Tabs() {
   const objectToArray = () => {
     let res = [];
     let i = 0;
+
     Object.keys(file).map((e) => {
-      res.push({
-        name: e,
-        duration: Math.round(file[e].duration * 10) / 10,
-        occurence: file[e].occurence,
-        durPerOccurence:
-          Math.round((file[e].duration * 10) / file[e].occurence) / 10,
-        subEvents: [],
-      });
-      Object.keys(file[e].subEvents).map((sub) => {
-        res[i].subEvents.push({
-          name: sub,
-          duration: Math.round(file[e].subEvents[sub].duration * 10) / 10,
-          occurence: file[e].subEvents[sub].occurence,
+      if (
+        file[e].occurence >= minOccurence &&
+        file[e].duration >= minDuration
+      ) {
+        res.push({
+          name: e,
+          duration: Math.round(file[e].duration * 10) / 10,
+          occurence: file[e].occurence,
           durPerOccurence:
-            Math.round(
-              (file[e].subEvents[sub].duration * 10) /
-                file[e].subEvents[sub].occurence
-            ) / 10,
+            Math.round((file[e].duration * 10) / file[e].occurence) / 10,
+          subEvents: [],
         });
-      });
-      i += 1;
+        Object.keys(file[e].subEvents).map((sub) => {
+          res[i].subEvents.push({
+            name: sub,
+            duration: Math.round(file[e].subEvents[sub].duration * 10) / 10,
+            occurence: file[e].subEvents[sub].occurence,
+            durPerOccurence:
+              Math.round(
+                (file[e].subEvents[sub].duration * 10) /
+                  file[e].subEvents[sub].occurence
+              ) / 10,
+          });
+        });
+        i += 1;
+      }
     });
     return res;
   };
 
+  const inputHandler = (e) => {
+    //convert input text to lower case
+    setInputText(e.target.value.toLowerCase().latinize());
+    setSearchBarUsed(true);
+  };
+
   useEffect(() => {
-    setFileArray(objectToArray(file));
-    console.log(
-      fileArray.sort(function compare(a, b) {
-        if (a.duration < b.duration) return 1;
-        if (a.duration > b.duration) return -1;
-        return 0;
-      })
-    );
-  }, [file]);
+    if (!searchBarUsed) {
+      let objToArr = objectToArray(file);
+      setFileArray(objToArr);
+      setFileArrayFiltered(objToArr);
+    } else {
+      setFileArray(objectToArray(file));
+
+      if (inputText != "") {
+        let res = [];
+        let i = 0;
+        fileArray.map((e) => {
+          let finded = false;
+          if (fileArray[i].name.toLowerCase().latinize().includes(inputText)) {
+            res.push(fileArray[i]);
+            finded = true;
+          }
+
+          fileArray[i].subEvents.forEach((element) => {
+            if (
+              element.name.toLowerCase().latinize().includes(inputText) &&
+              !finded
+            ) {
+              res.push(fileArray[i]);
+              finded = true;
+            }
+          });
+          i += 1;
+        });
+        setFileArrayFiltered(res);
+      } else {
+        setFileArrayFiltered(fileArray);
+      }
+    }
+  }, [file, inputText, searchBarUsed, minOccurence, minDuration]);
 
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
+    <Box sx={{ "margin-top": "px", width: "100%", typography: "body1" }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -71,9 +115,19 @@ export default function Tabs() {
           </TabList>
         </Box>
         <TabPanel value="1">
+          <div className="search">
+            <TextField
+              id="outlined-basic"
+              onChange={inputHandler}
+              variant="outlined"
+              fullWidth
+              label="Search"
+            />
+          </div>
+
           {fileArray.length > 0 ? (
             <CollapsibleTable
-              fileArray={fileArray}
+              fileArray={fileArrayFiltered}
               key={fileArray[0].name}
               sort={"duration"}
             />
@@ -82,9 +136,18 @@ export default function Tabs() {
           )}
         </TabPanel>
         <TabPanel value="2">
+          <div className="search">
+            <TextField
+              id="outlined-basic"
+              onChange={inputHandler}
+              variant="outlined"
+              fullWidth
+              label="Search"
+            />
+          </div>
           {fileArray.length > 0 ? (
             <CollapsibleTable
-              fileArray={fileArray}
+              fileArray={fileArrayFiltered}
               key={fileArray[0].name}
               sort={"occurence"}
             />

@@ -9,12 +9,20 @@ import CloudUpload from "@mui/icons-material/CloudUpload";
 import Tabs from "../components/Tabs";
 import SelectInput from "@mui/material/Select/SelectInput";
 import { DataContext } from "../contexts/DataContext";
+import Calendar from "../components/Calendar";
 import { fontGrid } from "@mui/material/styles/cssUtils";
+import VerticalSlider1 from "../components/VerticalSlider1";
+import VerticalSlider2 from "../components/VerticalSlider2";
 
 const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [file, setFile] = useState({});
   const [reload, setReload] = useState(0);
+  const [apply, setApply] = useState(0);
+  const [startDate, setStartDate] = useState(new Date(2005, 1, 1));
+  const [endDate, setEndDate] = useState(new Date(2045, 12, 31));
+  const [minDuration, setMinDuration] = useState(0);
+  const [minOccurence, setMinOccurence] = useState(0);
 
   const getData = async () => {
     //file = goodArrayToResults(await fileToArray());
@@ -26,9 +34,17 @@ const Home = () => {
     if (selectedFile != null) {
       arrayEvent = await myConvert(selectedFile);
       arrayEvent.forEach((e) => {
-        e.startDate = icsDateToGoodDate(e.startDate);
-        e.endDate = icsDateToGoodDate(e.endDate);
-        e.durationMiliseconds = Math.abs(e.endDate - e.startDate);
+        let start = icsDateToGoodDate(e.startDate);
+        let end = icsDateToGoodDate(e.endDate);
+        if (endDate == startDate) {
+          e.startDate = start;
+          e.endDate = end;
+          e.durationMiliseconds = Math.abs(e.endDate - e.startDate);
+        } else if (endDate - end > 0 && start - startDate > 0) {
+          e.startDate = start;
+          e.endDate = end;
+          e.durationMiliseconds = Math.abs(e.endDate - e.startDate);
+        }
       });
     }
     return arrayEvent;
@@ -121,40 +137,91 @@ const Home = () => {
         setFile(data);
         setReload(1);
       }
-      if (reload != 0) {
-        setFile(data);
-      }
-      if (selectedFile != null && reload != 0) {
-        setSelectedFile(null);
-        setReload(0);
-      }
+      // if (reload != 0) {
+      //   setFile(data);
+      // }
+      // if (selectedFile != null && reload != 0) {
+      //   setSelectedFile(null);
+      //   setReload(0);
+      // }
       //console.log(file);
     });
     //console.log(file);
     //console.log(goodArrayToResults(getData()));
-  }, [selectedFile, reload]);
+  }, [
+    selectedFile,
+    reload,
+    startDate,
+    endDate,
+    apply,
+    minOccurence,
+    minDuration,
+  ]);
 
   return (
     <div>
-      <Button variant="contained" component="label">
-        Upload
-        <input
-          hidden
-          accept=".ics"
-          type="file"
-          onChange={(e) => setSelectedFile(e.target.files[0])}
-        />
-      </Button>
-      <IconButton color="primary" aria-label="upload picture" component="label">
-        <input
-          hidden
-          accept=".ics"
-          type="file"
-          onChange={(e) => setSelectedFile(e.target.files[0])}
-        />
-        <CloudUpload />
-      </IconButton>
-      <DataContext.Provider value={{ file: file }}>
+      <h6>Sélectionnez ce que vous souhaitez et uploadez votre fichier ICS</h6>
+      <div className="selection">
+        <DataContext.Provider
+          value={{
+            setMinDuration,
+            setMinOccurence,
+          }}
+        >
+          <VerticalSlider1 />
+          <VerticalSlider2 />
+        </DataContext.Provider>
+        <div className="calendrier">
+          <DataContext.Provider
+            value={{
+              setStartDate,
+              setEndDate,
+            }}
+          >
+            <Calendar />
+          </DataContext.Provider>
+        </div>
+        <br />
+        <div className="buttonclass">
+          <Button variant="contained" component="label">
+            Upload
+            <input
+              hidden
+              accept=".ics"
+              type="file"
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+            />
+          </Button>
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+          >
+            <input
+              hidden
+              accept=".ics"
+              type="file"
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+            />
+            <CloudUpload />
+          </IconButton>
+          <Button
+            onClick={() => {
+              setApply((previous) => previous + 1);
+            }}
+            variant="contained"
+          >
+            Apply
+          </Button>
+        </div>
+      </div>
+      <DataContext.Provider
+        value={{
+          file: file,
+          minOccurence: minOccurence,
+          minDuration: minDuration,
+        }}
+      >
         <Tabs />
       </DataContext.Provider>
     </div>

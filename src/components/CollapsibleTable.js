@@ -52,7 +52,7 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Activité</TableCell>
+                    <TableCell></TableCell>
                     <TableCell align="right">Nombre d'heures</TableCell>
                     <TableCell align="right">Occurences</TableCell>
                     <TableCell align="right">
@@ -103,9 +103,7 @@ Row.propTypes = {
 };
 
 export default function CollapsibleTable({ fileArray, sort }) {
-  React.useEffect(() => {
-    console.log(fileArray);
-  }, []);
+  React.useEffect(() => {}, []);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
