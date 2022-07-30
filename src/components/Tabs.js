@@ -103,59 +103,61 @@ export default function Tabs() {
   }, [file, inputText, searchBarUsed, minOccurence, minDuration]);
 
   return (
-    <Box sx={{ "margin-top": "px", width: "100%", typography: "body1" }}>
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab
-              label="Classement par nombre d'heures décroissantes"
-              value="1"
-            />
-            <Tab label="Classement par occurence décroissante" value="2" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-          <div className="search">
-            <TextField
-              id="outlined-basic"
-              onChange={inputHandler}
-              variant="outlined"
-              fullWidth
-              label="Search"
-            />
-          </div>
+    <div className="boxMargin">
+      <Box sx={{ width: "100%", typography: "body1" }}>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab
+                label="Classement par nombre d'heures décroissantes"
+                value="1"
+              />
+              <Tab label="Classement par occurence décroissante" value="2" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <div className="search">
+              <TextField
+                id="outlined-basic"
+                onChange={inputHandler}
+                variant="outlined"
+                fullWidth
+                label="Search"
+              />
+            </div>
 
-          {fileArray.length > 0 ? (
-            <CollapsibleTable
-              fileArray={fileArrayFiltered}
-              key={fileArray[0].name}
-              sort={"duration"}
-            />
-          ) : (
-            "Merci de sélectionner votre fichier ICS"
-          )}
-        </TabPanel>
-        <TabPanel value="2">
-          <div className="search">
-            <TextField
-              id="outlined-basic"
-              onChange={inputHandler}
-              variant="outlined"
-              fullWidth
-              label="Search"
-            />
-          </div>
-          {fileArray.length > 0 ? (
-            <CollapsibleTable
-              fileArray={fileArrayFiltered}
-              key={fileArray[0].name}
-              sort={"occurence"}
-            />
-          ) : (
-            "Merci de sélectionner votre fichier ICS"
-          )}
-        </TabPanel>
-      </TabContext>
-    </Box>
+            {fileArray.length > 0 ? (
+              <CollapsibleTable
+                fileArray={fileArrayFiltered}
+                key={fileArray[0].name}
+                sort={"duration"}
+              />
+            ) : (
+              "Merci de sélectionner votre fichier ICS"
+            )}
+          </TabPanel>
+          <TabPanel value="2">
+            <div className="search">
+              <TextField
+                id="outlined-basic"
+                onChange={inputHandler}
+                variant="outlined"
+                fullWidth
+                label="Search"
+              />
+            </div>
+            {fileArray.length > 0 ? (
+              <CollapsibleTable
+                fileArray={fileArrayFiltered}
+                key={fileArray[0].name}
+                sort={"occurence"}
+              />
+            ) : (
+              "Merci de sélectionner votre fichier ICS"
+            )}
+          </TabPanel>
+        </TabContext>
+      </Box>
+    </div>
   );
 }
