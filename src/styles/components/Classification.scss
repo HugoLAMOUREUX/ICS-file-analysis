@@ -1,0 +1,18 @@
+.classif{
+    position: relative;
+}
+.graph{
+    display:flex;
+    height:45%;
+     width:45%;
+     position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+p{align-items: center;
+text-align: center;}
+
+.pMargin {
+    margin-top: 15px;
+}

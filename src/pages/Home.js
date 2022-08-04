@@ -17,6 +17,7 @@ import VerticalSlider2 from "../components/VerticalSlider2";
 const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [file, setFile] = useState({});
+  const [fileArray, setFileArray] = useState({});
   const [reload, setReload] = useState(0);
   const [apply, setApply] = useState(0);
   const [startDate, setStartDate] = useState(new Date(2005, 1, 1));
@@ -46,6 +47,7 @@ const Home = () => {
           e.durationMiliseconds = Math.abs(e.endDate - e.startDate);
         }
       });
+      setFileArray(arrayEvent);
     }
     return arrayEvent;
   };
@@ -137,13 +139,13 @@ const Home = () => {
         setFile(data);
         setReload(1);
       }
-      // if (reload != 0) {
-      //   setFile(data);
-      // }
-      // if (selectedFile != null && reload != 0) {
-      //   setSelectedFile(null);
-      //   setReload(0);
-      // }
+      if (reload != 0) {
+        setFile(data);
+      }
+      if (selectedFile != null && reload != 0) {
+        setSelectedFile(null);
+        setReload(0);
+      }
       //console.log(file);
     });
     //console.log(file);
@@ -220,6 +222,7 @@ const Home = () => {
           file: file,
           minOccurence: minOccurence,
           minDuration: minDuration,
+          fileArray: fileArray,
         }}
       >
         <Tabs />

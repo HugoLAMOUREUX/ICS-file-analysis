@@ -1,0 +1,739 @@
+[
+  {
+    "input": { "sport": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "piano": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "japonais": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "suedois": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "musique": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "serie": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "anime": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "film": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "guitare": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "violon": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "sieste": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "elite": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "production": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "musicale": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "production": 1, "musicale": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "clarinette": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "montage": 1, "video": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "cuisine": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "tri": 1, "photos": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "skate": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "course": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "dj": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "djing": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "squid": 1, "game": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "video": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "fl": 1, "studio": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "young": 1, "royals": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "soiree": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "bar": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "lol": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "northgard": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "northgard": 1, "puis": 1, "lol": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "jeu": 1, "de": 1, "cartes": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "carte": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "cartes": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "discussion": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "pizza": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "date": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "avec": 1, "anton": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "tacos": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "post": 1, "partiels": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "repas": 1, "a": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "repas": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "sortie": 1, "a": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "sortie": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "raclette": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "ville": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "poekr": 1 },
+    "output": { "sortie": 1 }
+  },
+
+  {
+    "input": { "piscine": 1, "chez": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "concert": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "festival": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "resto": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "restau": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "cities": 1, "skylines": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "opera": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "cousinade": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "minecraft": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "balade": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "musee": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "museum": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "memorial": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "kebab": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "BK": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "mcdo": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "kfc": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "subway": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "pride": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "foy": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "boom": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "pique": 1, "nique": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "Poke": 1, "bowl": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "before": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "after": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "discussion": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "plan": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "cinema": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "rock": 1, "solex": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "visite": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "bebop": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "apero": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "restaurant": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "gouter": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "conference": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "patinoire": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "cinema": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "train": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "bus": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "avion": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "bateau": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "demenagement": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "voiture": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "flight": 1 },
+    "output": { "transport": 1 }
+  },
+  {
+    "input": { "je": 1 },
+    "output": { "association": 1 }
+  },
+  {
+    "input": { "association": 1 },
+    "output": { "association": 1 }
+  },
+  {
+    "input": { "club": 1, "dj": 1 },
+    "output": { "association": 1 }
+  },
+  {
+    "input": { "club": 1 },
+    "output": { "association": 1 }
+  },
+  {
+    "input": { "asso": 1 },
+    "output": { "association": 1 }
+  },
+  {
+    "input": { "mariage": 1 },
+    "output": { "sortie": 1 }
+  },
+  {
+    "input": { "courses": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "machine": 1, "a": 1, "laver": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "achats": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "arcane": 1 },
+    "output": { "culturel": 1 }
+  },
+  {
+    "input": { "laverie": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "rdv": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "rendez": 1, "vous": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "aide": 1, "informatique": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "informatique": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "info": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "reinscription": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "inscription": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "cuisine": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "banque": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "coiffeur": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "magasin": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "comparatif": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "cegidd": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "colis": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "drive": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "impression": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "recup": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "menage": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "rangement": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "orl": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "nettoyage": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "pharmacie": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "dentiste": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "radio": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "decathlon": 1 },
+    "output": { "obligation": 1 }
+  },
+  {
+    "input": { "analyse": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "algebre": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "proba": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "geometrie": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "ondes": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "elec": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "electricite": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "chimie": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "anglais": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "espagnol": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "web": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "flutter": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "projet": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "taleo": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "reu": 1, "delegues": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "stat": 1, "inf": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "graphes": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "ep": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "simulation": 1, "de": 1, "gestion": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "apprentissage": 1, "automatique": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "conseil": 1, "info": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "ppi": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "complexite": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "bdd": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "propositions": 1, "et": 1, "predicats": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "programmation": 1, "mobile": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "programmation": 1, "fonctionnelle": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "programmation": 1, "logique": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "jpo": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "prolog": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "hygiene": 1, "informatique": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "lds": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "fus": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "pi": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "bdd": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "afd": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "mooc": 1, "risque": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "prog": 1, "fonctionnelle": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "clp": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "bdd": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "cpoo": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "clp": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "langage": 1, "c": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "react": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "html": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "css": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "javascript": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "projet": 1, "site": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "meca": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "si": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "sa": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "cuco": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "tp": 1, "physique": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "tp": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "thermo": 1 },
+    "output": { "tperso": 1 }
+  },
+  {
+    "input": { "lhc": 1 },
+    "output": { "tperso": 1 }
+  }
+]

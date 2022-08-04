@@ -9,6 +9,7 @@ import { DataContext } from "../contexts/DataContext";
 import CollapsibleTable from "./CollapsibleTable";
 import TextField from "@mui/material/TextField";
 import { latinize } from "../utils/accent";
+import Classification from "./Classification";
 
 export default function Tabs() {
   const [value, setValue] = useState("1");
@@ -113,6 +114,7 @@ export default function Tabs() {
                 value="1"
               />
               <Tab label="Classement par occurence décroissante" value="2" />
+              <Tab label="Classification et analyse" value="3" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -155,6 +157,15 @@ export default function Tabs() {
             ) : (
               "Merci de sélectionner votre fichier ICS"
             )}
+          </TabPanel>
+          <TabPanel value="3">
+            <div>
+              {fileArray.length > 0 ? (
+                <Classification fileArray={fileArray} key={fileArray[0].name} />
+              ) : (
+                ""
+              )}
+            </div>
           </TabPanel>
         </TabContext>
       </Box>
