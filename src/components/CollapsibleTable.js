@@ -13,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { DataContext } from "../contexts/DataContext";
+import { useContext } from "react";
 
 function Row(props) {
   const { row } = props;
@@ -103,7 +105,28 @@ Row.propTypes = {
 };
 
 export default function CollapsibleTable({ fileArray, sort }) {
-  React.useEffect(() => {}, []);
+  const { subEventsSorted } = useContext(DataContext);
+  React.useEffect(() => {
+    if (subEventsSorted == "duration") {
+      fileArray.forEach((e) => {
+        e.subEvents.sort(function compare(a, b) {
+          if (a.duration < b.duration) return 1;
+          if (a.duration > b.duration) return -1;
+          return 0;
+        });
+      });
+    }
+    if (subEventsSorted == "occurence") {
+      fileArray.forEach((e) => {
+        e.subEvents.sort(function compare(a, b) {
+          if (a.occurence < b.occurence) return 1;
+          if (a.occurence > b.occurence) return -1;
+          return 0;
+        });
+      });
+    }
+    console.log(fileArray);
+  }, [fileArray, subEventsSorted]);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

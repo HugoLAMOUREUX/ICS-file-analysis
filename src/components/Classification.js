@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useState } from "react";
+import CollapsibleTable from "./CollapsibleTable";
 
 const { NeuralNetwork } = require("@nlpjs/neural");
 const corpus = require("./corpus.json");
@@ -17,11 +18,65 @@ const Classification = ({ fileArray }) => {
     transport: { duration: 0, occurence: 0 },
     unknown: { duration: 0, occurence: 0 },
   });
-  const [data, setData] = useState({});
+  const [totalArray, setTotalArray] = useState([
+    {
+      name: "Travail personnel",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Sorties",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Associations",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Obligations",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Transports",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Inconnu",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Culturel",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+  ]);
+  const [dataDuration, setDataDuration] = useState({});
   const [dataOccurence, setDataOccurence] = useState({});
-
   const [reload, setReload] = useState(0);
 
+  /*
+   * Pour chaque évènement on calcule son pourcentage d'appartenance à chaque classe en transformant le titre avec le bon format et en le passant dans le réseau de neuronne
+   * @return { Object[] } RecapDataWithPercentageClass
+   */
   const classify = () => {
     let res = [];
     const net = new NeuralNetwork();
@@ -43,6 +98,11 @@ const Classification = ({ fileArray }) => {
     return res;
   };
 
+  /*
+   * Change l'attribut classe qui contenait le pourcentage de similarité de chaque classe par la classe qui corresponds le mieux (si il y en a une)
+   * @param { Object[] } RecapDataWithPercentageClass
+   * @return { Object } RecapDataWithOneClass
+   */
   const attributeOneClass = (data) => {
     let res = [];
     data.forEach((element) => {
@@ -68,6 +128,11 @@ const Classification = ({ fileArray }) => {
     return res;
   };
 
+  /*
+   * Classe chaque évènement dans la même catégorie
+   * @param { Object[] } RecapDataWithOneClass
+   * @return { Object } RecapDataPerClass
+   */
   const totalPerClass = (data) => {
     let res = {
       tperso: { duration: 0, occurence: 0, event: [] },
@@ -79,7 +144,6 @@ const Classification = ({ fileArray }) => {
       culturel: { duration: 0, occurence: 0, event: [] },
     };
     data.forEach((element) => {
-      console.log(element);
       if (element.class == "sortie") {
         res["sortie"]["occurence"] += element.occurence;
         res["sortie"]["duration"] += element.duration;
@@ -115,13 +179,114 @@ const Classification = ({ fileArray }) => {
         res["unknown"]["duration"] += element.duration;
         res["unknown"]["event"].push(element.name);
       }
-      console.log(element);
+    });
+    return res;
+  };
+
+  /*
+   * Classe chaque évènement dans la même catégorie dans un tableau qui contient le nom de la catégorie en attribut name
+   * @param { Object[] } RecapDataWithOneClass
+   * @return { Object[] } RecapDataPerClassArray
+   */
+  const totalPerClassArray = (data) => {
+    let res = [
+      {
+        name: "Travail personnel",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+      {
+        name: "Sorties",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+      {
+        name: "Associations",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+      {
+        name: "Obligations",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+      {
+        name: "Transports",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+      {
+        name: "Inconnu",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+      {
+        name: "Culturel",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
+    ];
+    data.forEach((element) => {
+      if (element.class == "sortie") {
+        res[1]["occurence"] += element.occurence;
+        res[1]["duration"] += element.duration;
+        res[1]["subEvents"].push(element);
+      }
+      if (element.class == "culturel") {
+        res[6]["occurence"] += element.occurence;
+        res[6]["duration"] += element.duration;
+        res[6]["subEvents"].push(element);
+      }
+      if (element.class == "tperso") {
+        res[0]["occurence"] += element.occurence;
+        res[0]["duration"] += element.duration;
+        res[0]["subEvents"].push(element);
+      }
+      if (element.class == "obligation") {
+        res[3]["occurence"] += element.occurence;
+        res[3]["duration"] += element.duration;
+        res[3]["subEvents"].push(element);
+      }
+      if (element.class == "transport") {
+        res[4]["occurence"] += element.occurence;
+        res[4]["duration"] += element.duration;
+        res[4]["subEvents"].push(element);
+      }
+      if (element.class == "association") {
+        res[2]["occurence"] += element.occurence;
+        res[2]["duration"] += element.duration;
+        res[2]["subEvents"].push(element);
+      }
+      if (element.class == "unknown") {
+        res[5]["occurence"] += element.occurence;
+        res[5]["duration"] += element.duration;
+        res[5]["subEvents"].push(element);
+      }
+    });
+    res.forEach((e) => {
+      e.durPerOccurence = Math.round((e.duration * 10) / e.occurence) / 10;
+      e.duration = Math.round(e.duration * 10) / 10;
     });
     return res;
   };
 
   useEffect(() => {
     if (reload == 0) {
+      setTotalArray(totalPerClassArray(attributeOneClass(classify())));
       setTotal(totalPerClass(attributeOneClass(classify())));
 
       setReload(1);
@@ -172,7 +337,7 @@ const Classification = ({ fileArray }) => {
           },
         ],
       });
-      setData({
+      setDataDuration({
         labels: [
           "Travail personnel",
           "Sorties",
@@ -219,7 +384,6 @@ const Classification = ({ fileArray }) => {
     }
     if (reload == 2) {
       setReload(3);
-      console.log("SLTTT", Object.keys(data).length);
     }
   }, [
     total["tperso"]["duration"],
@@ -229,20 +393,37 @@ const Classification = ({ fileArray }) => {
     total["transport"]["duration"],
     total["association"]["duration"],
     total["unknown"]["duration"],
+    totalArray[0]["duration"],
+    totalArray[1]["duration"],
+    totalArray[2]["duration"],
+    totalArray[3]["duration"],
+    totalArray[4]["duration"],
+    totalArray[5]["duration"],
+    totalArray[6]["duration"],
   ]);
 
   return (
-    <div className="classif">
-      {Object.keys(data).length > 0 ? (
-        <div className="graph">
-          <div className="graphiqueSolo">
-            <Pie data={data} />
-            <p className="pMargin">Nombre d'heures par catégories</p>
+    <div>
+      {Object.keys(dataDuration).length > 0 ? (
+        <div>
+          <div className="classif">
+            <div className="graph">
+              <div className="graphiqueSolo">
+                <Pie data={dataDuration} />
+                <p className="pMargin">Nombre d'heures par catégories</p>
+              </div>
+              <div className="graphiqueSolo">
+                <Pie data={dataOccurence} />
+                <p className="pMargin">Nombre d'occurences par catégories</p>
+              </div>
+            </div>
           </div>
-          <div className="graphiqueSolo">
-            <Pie data={dataOccurence} />
-            <p className="pMargin">Nombre d'occurences par catégories</p>
-          </div>
+          <h3>Détails</h3>
+          <CollapsibleTable
+            fileArray={totalArray}
+            key={fileArray[0].name}
+            sort={"duration"}
+          />
         </div>
       ) : (
         ""

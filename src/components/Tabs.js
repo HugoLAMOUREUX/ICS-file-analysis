@@ -13,7 +13,6 @@ import Classification from "./Classification";
 
 export default function Tabs() {
   const [value, setValue] = useState("1");
-  const [reload, setReload] = useState("0");
   const [fileArray, setFileArray] = useState([]);
   const [fileArrayFiltered, setFileArrayFiltered] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -22,10 +21,29 @@ export default function Tabs() {
   const { minDuration } = useContext(DataContext);
   const { minOccurence } = useContext(DataContext);
 
+  /*
+   * Appelé quand on change d'onglet de la nav bar
+   */
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setInputText("");
+    setSearchBarUsed(false);
   };
 
+  /*
+   * Une fois la barre de recherche utilisée, cette fonction est lancée et permets de stocker le texte rentré dans inputText et de signifier que la barre a été utilisé à travers le searchBarUse à true
+   * @param { Object } évènement
+   */
+  const inputHandler = (e) => {
+    //convert input text to lower case
+    setInputText(e.target.value.toLowerCase().latinize());
+    setSearchBarUsed(true);
+  };
+
+  /*
+   * Converti le dictionnaire en un tableau d'objet avec un champ nampe qui contient l'ancien nom de l'event stocké par clé du dictionnaire, permets aussi de filtrer par occurence et durée minimale
+   * @return { Object[] } RecapTabFiltered
+   */
   const objectToArray = () => {
     let res = [];
     let i = 0;
@@ -61,10 +79,30 @@ export default function Tabs() {
     return res;
   };
 
-  const inputHandler = (e) => {
-    //convert input text to lower case
-    setInputText(e.target.value.toLowerCase().latinize());
-    setSearchBarUsed(true);
+  /*
+   * Permets de sélectionner les évènements dont leurs noms ou les noms de leurs sous Events contiennent ce qui a été écrit dans la bar de recherche
+   * @return { Object[] } findSearchedEvents
+   */
+  const findSearchedEvents = () => {
+    let res = [];
+    fileArray.map((e) => {
+      let finded = false;
+      if (e.name.toLowerCase().latinize().includes(inputText)) {
+        res.push(e);
+        finded = true;
+      }
+
+      e.subEvents.forEach((element) => {
+        if (
+          element.name.toLowerCase().latinize().includes(inputText) &&
+          !finded
+        ) {
+          res.push(e);
+          finded = true;
+        }
+      });
+    });
+    return res;
   };
 
   useEffect(() => {
@@ -76,28 +114,9 @@ export default function Tabs() {
       setFileArray(objectToArray(file));
 
       if (inputText != "") {
-        let res = [];
-        let i = 0;
-        fileArray.map((e) => {
-          let finded = false;
-          if (fileArray[i].name.toLowerCase().latinize().includes(inputText)) {
-            res.push(fileArray[i]);
-            finded = true;
-          }
-
-          fileArray[i].subEvents.forEach((element) => {
-            if (
-              element.name.toLowerCase().latinize().includes(inputText) &&
-              !finded
-            ) {
-              res.push(fileArray[i]);
-              finded = true;
-            }
-          });
-          i += 1;
-        });
-        setFileArrayFiltered(res);
-      } else {
+        setFileArrayFiltered(findSearchedEvents());
+      } // dans le cas où on a écrit dans la bar de recherche donc barUsed -> true mais qu'on a effacé apres
+      else {
         setFileArrayFiltered(fileArray);
       }
     }
@@ -107,7 +126,12 @@ export default function Tabs() {
     <div className="boxMargin">
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+            }}
+          >
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab
                 label="Classement par nombre d'heures décroissantes"
@@ -163,7 +187,7 @@ export default function Tabs() {
               {fileArray.length > 0 ? (
                 <Classification fileArray={fileArray} key={fileArray[0].name} />
               ) : (
-                ""
+                "Merci de sélectionner votre fichier ICS"
               )}
             </div>
           </TabPanel>

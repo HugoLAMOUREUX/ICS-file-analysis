@@ -1,35 +1,42 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import icsToJson from "ics-to-json-extended";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Stack from "@mui/material/Stack";
-import CloudUpload from "@mui/icons-material/CloudUpload";
+
 import Tabs from "../components/Tabs";
-import SelectInput from "@mui/material/Select/SelectInput";
+import Settings from "../components/Settings/Settings";
+
+import { icsDateToGoodDate } from "../utils/IcsDateToGoodDate";
+
 import { DataContext } from "../contexts/DataContext";
-import Calendar from "../components/Calendar";
-import { fontGrid } from "@mui/material/styles/cssUtils";
-import VerticalSlider1 from "../components/VerticalSlider1";
-import VerticalSlider2 from "../components/VerticalSlider2";
 
 const Home = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [file, setFile] = useState({});
-  const [fileArray, setFileArray] = useState({});
   const [reload, setReload] = useState(0);
-  const [apply, setApply] = useState(0);
   const [startDate, setStartDate] = useState(new Date(2005, 1, 1));
   const [endDate, setEndDate] = useState(new Date(2045, 12, 31));
   const [minDuration, setMinDuration] = useState(0);
   const [minOccurence, setMinOccurence] = useState(0);
+  const [subEventsSorted, setSubEventsSorted] = useState("duration");
 
-  const getData = async () => {
-    //file = goodArrayToResults(await fileToArray());
-    return await goodArrayToResults(await fileToArray());
+  /*
+   * Converti le fichier ICS uploadé par l'utilisateur en JSON qui contient les données du fichier
+   * @param { file } fileLocation
+   * @return { Object } IcsData
+   */
+  const myConvert = async (fileLocation) => {
+    //const icsRes = await fetch(fileLocation);
+    // le fichier est déja la en tant que fichier
+    const icsData = await selectedFile.text();
+    // Convert
+    const data = icsToJson(icsData);
+
+    return data;
   };
 
+  /*
+   * Converti un objet de type ICS en un tableau d'évènements
+   * @return { Object[] } ArrayOfEvents - Chaque évènement contient les informations de l'évènement ICS plus sa durée et ses dates mises au bon format
+   */
   const fileToArray = async () => {
     let arrayEvent = [];
     if (selectedFile != null) {
@@ -47,27 +54,15 @@ const Home = () => {
           e.durationMiliseconds = Math.abs(e.endDate - e.startDate);
         }
       });
-      setFileArray(arrayEvent);
     }
     return arrayEvent;
   };
 
-  const icsDateToGoodDate = (icsDate) => {
-    let x = icsDate.indexOf(":");
-    let icalStr = icsDate.slice(x + 1);
-
-    let strYear = icalStr.substr(0, 4);
-    let strMonth = parseInt(icalStr.substr(4, 2), 10) - 1;
-    let strDay = icalStr.substr(6, 2);
-    let strHour = parseInt(icalStr.substr(9, 2)) + 2;
-    let strMin = icalStr.substr(11, 2);
-    let strSec = icalStr.substr(13, 2);
-
-    let oDate = new Date(strYear, strMonth, strDay, strHour, strMin, strSec);
-
-    return oDate;
-  };
-
+  /*
+   * Converti le tableau d'évènements en un Objet de la forme {Sport:{duration:0,occurence:0,subEvents:{}},Piano:{duration:6,occurence:6,subEvents:{Cours:{duration:6,occurence:6}}} }
+   * @param { Object[] } eventArray
+   * @return { Object } eventsRecaps - Chaque évènement de même type ont étés regroupés ensemble
+   */
   const goodArrayToResults = (eventArray) => {
     let res = {};
     let regex = new RegExp("^([^-]*)(-+)(.*)");
@@ -123,16 +118,17 @@ const Home = () => {
     return res;
   };
 
-  const myConvert = async (fileLocation) => {
-    //const icsRes = await fetch(fileLocation);
-    // le fichier est déja la en tant que fichier
-    const icsData = await selectedFile.text();
-    // Convert
-    const data = icsToJson(icsData);
-
-    return data;
+  /*
+   * Permets d'appeler goodArrayToResults de manière asynchrone et donc de récupérer le récap des events
+   * @return { Object } eventsRecaps - Chaque évènement de même type ont étés regroupés ensemble
+   */
+  const getData = async () => {
+    return await goodArrayToResults(await fileToArray());
   };
 
+  /*
+   * Petit bordel pour récupérer les données et les mettre dans les useState
+   */
   useEffect(() => {
     getData().then((data) => {
       if (selectedFile != null && reload == 0) {
@@ -146,83 +142,38 @@ const Home = () => {
         setSelectedFile(null);
         setReload(0);
       }
-      //console.log(file);
     });
-    //console.log(file);
-    //console.log(goodArrayToResults(getData()));
   }, [
     selectedFile,
     reload,
     startDate,
     endDate,
-    apply,
     minOccurence,
     minDuration,
+    subEventsSorted,
   ]);
 
   return (
     <div>
-      <h6>Sélectionnez ce que vous souhaitez et uploadez votre fichier ICS</h6>
-      <div className="selection">
-        <DataContext.Provider
-          value={{
-            setMinDuration,
-            setMinOccurence,
-          }}
-        >
-          <VerticalSlider1 />
-          <VerticalSlider2 />
-        </DataContext.Provider>
-        <div className="calendrier">
-          <DataContext.Provider
-            value={{
-              setStartDate,
-              setEndDate,
-            }}
-          >
-            <Calendar />
-          </DataContext.Provider>
-        </div>
-        <br />
-        <div className="buttonclass">
-          <Button variant="contained" component="label">
-            Upload
-            <input
-              hidden
-              accept=".ics"
-              type="file"
-              onChange={(e) => setSelectedFile(e.target.files[0])}
-            />
-          </Button>
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="label"
-          >
-            <input
-              hidden
-              accept=".ics"
-              type="file"
-              onChange={(e) => setSelectedFile(e.target.files[0])}
-            />
-            <CloudUpload />
-          </IconButton>
-          <Button
-            onClick={() => {
-              setApply((previous) => previous + 1);
-            }}
-            variant="contained"
-          >
-            Apply
-          </Button>
-        </div>
-      </div>
+      <DataContext.Provider
+        value={{
+          setMinDuration,
+          setMinOccurence,
+          setStartDate,
+          setEndDate,
+          setSubEventsSorted,
+          setSelectedFile,
+        }}
+      >
+        <Settings />
+      </DataContext.Provider>
+
       <DataContext.Provider
         value={{
           file: file,
           minOccurence: minOccurence,
           minDuration: minDuration,
-          fileArray: fileArray,
+          subEventsSorted: subEventsSorted,
         }}
       >
         <Tabs />
