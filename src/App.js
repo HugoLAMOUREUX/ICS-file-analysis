@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Test from "./pages/Test";
 import CollapsibleTable from "./components/CollapsibleTable";
-import Info from "./pages/Info";
+import Info from "./pages/Info"; //t
 
 function App() {
   return (
