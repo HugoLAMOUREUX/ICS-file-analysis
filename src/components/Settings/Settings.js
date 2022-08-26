@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
 
 import VerticalSliderDuration from "./VerticalSliderDuration";
@@ -9,6 +10,7 @@ import LanguageSelector from "./LanguageSelector";
 import SubEventsSort from "./SubEventsSort";
 import IconButton from "@mui/material/IconButton";
 import CloudUpload from "@mui/icons-material/CloudUpload";
+import HelpIcon from "@mui/icons-material/Help";
 
 import { useTranslation } from "react-i18next";
 
@@ -23,11 +25,21 @@ const Settings = () => {
   } = useContext(DataContext);
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div>
       <div className="upBar">
         <h6>{t("instructions")}</h6>
+        <IconButton aria-label="delete">
+          <HelpIcon
+            aria-label="delete"
+            color="primary"
+            className="helpIcon"
+            onClick={() => navigate("/info")}
+          />
+        </IconButton>
+
         <div className="lSelector">
           <LanguageSelector />
         </div>
