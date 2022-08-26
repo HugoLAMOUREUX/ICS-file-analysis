@@ -4,12 +4,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { DataContext } from "../contexts/DataContext";
+import { DataContext } from "../../contexts/DataContext";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ControlledRadioButtonsGroup() {
   const [value, setValue] = React.useState("duration");
   const { setSubEventsSorted } = useContext(DataContext);
+  const { t } = useTranslation();
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -20,7 +22,7 @@ export default function ControlledRadioButtonsGroup() {
     <div className="subEventsSort">
       <FormControl>
         <FormLabel id="demo-controlled-radio-buttons-group">
-          Classer les sous évènements par
+          {t("classifySubEventsBy")}
         </FormLabel>
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
@@ -31,12 +33,12 @@ export default function ControlledRadioButtonsGroup() {
           <FormControlLabel
             value="duration"
             control={<Radio />}
-            label="Durée"
+            label={t("duration")}
           />
           <FormControlLabel
             value="occurence"
             control={<Radio />}
-            label="Occurence"
+            label={t("occurence")}
           />
         </RadioGroup>
       </FormControl>

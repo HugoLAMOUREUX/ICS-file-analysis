@@ -3,9 +3,12 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useContext } from "react";
 import { DataContext } from "../../contexts/DataContext";
+import { useTranslation } from "react-i18next";
 
 export default function VerticalSliderOccurence() {
   const { setMinOccurence } = useContext(DataContext);
+  const { t } = useTranslation();
+
   function preventHorizontalKeyboardNavigation(event) {
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
@@ -14,7 +17,7 @@ export default function VerticalSliderOccurence() {
 
   return (
     <Box sx={{ height: 150 }}>
-      <p>Occurence minimale&nbsp;&nbsp;</p>
+      <p>{t("minOccurence")}&nbsp;&nbsp;</p>
       <Slider
         sx={{
           '& input[type="range"]': {

@@ -1,14 +1,16 @@
 import { useContext } from "react";
 import { DatePicker } from "rsuite";
 import { DataContext } from "../../contexts/DataContext";
+import { useTranslation } from "react-i18next";
 
 const Calendar = () => {
   const { setStartDate } = useContext(DataContext);
   const { setEndDate } = useContext(DataContext);
+  const { t } = useTranslation();
 
   return (
     <>
-      <p>Date de début</p>
+      <p>{t("startDate")}</p>
       <DatePicker
         oneTap
         onSelect={(e) => setStartDate(e)}
@@ -18,7 +20,7 @@ const Calendar = () => {
         style={{ width: 200 }}
       />
       <hr />
-      <p>Date de fin</p>
+      <p>{t("endDate")}</p>
       <DatePicker
         oneTap
         onSelect={(e) => setEndDate(e)}

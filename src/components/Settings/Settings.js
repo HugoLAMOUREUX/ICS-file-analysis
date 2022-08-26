@@ -5,9 +5,12 @@ import VerticalSliderDuration from "./VerticalSliderDuration";
 import VerticalSliderOccurence from "./VerticalSliderOccurence";
 import Button from "@mui/material/Button";
 import Calendar from "./Calendar";
-import SubEventsSort from "../SubEventsSort";
+import LanguageSelector from "./LanguageSelector";
+import SubEventsSort from "./SubEventsSort";
 import IconButton from "@mui/material/IconButton";
 import CloudUpload from "@mui/icons-material/CloudUpload";
+
+import { useTranslation } from "react-i18next";
 
 const Settings = () => {
   const {
@@ -19,9 +22,17 @@ const Settings = () => {
     setSelectedFile,
   } = useContext(DataContext);
 
+  const { t } = useTranslation();
+
   return (
     <div>
-      <h6>Sélectionnez ce que vous souhaitez et uploadez votre fichier ICS</h6>
+      <div className="upBar">
+        <h6>{t("instructions")}</h6>
+        <div className="lSelector">
+          <LanguageSelector />
+        </div>
+      </div>
+
       <div className="selection">
         <VerticalSliderDuration />
         <VerticalSliderOccurence />

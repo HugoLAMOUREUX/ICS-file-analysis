@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import CollapsibleTable from "./CollapsibleTable";
 
 const { NeuralNetwork } = require("@nlpjs/neural");
@@ -9,6 +10,7 @@ const corpus = require("./corpus.json");
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Classification = ({ fileArray }) => {
+  const { t } = useTranslation();
   const [total, setTotal] = useState({
     tperso: { duration: 0, occurence: 0 },
     culturel: { duration: 0, occurence: 0 },
@@ -295,13 +297,13 @@ const Classification = ({ fileArray }) => {
       setReload(2);
       setDataOccurence({
         labels: [
-          "Travail personnel",
-          "Sorties",
-          "Activités culturelles",
-          "Obligations",
-          "Transports",
-          "Associations",
-          "Inconnu",
+          t("tperso"),
+          t("sortie"),
+          t("culturel"),
+          t("obligation"),
+          t("transport"),
+          t("association"),
+          t("unknown"),
         ],
         datasets: [
           {
@@ -339,13 +341,13 @@ const Classification = ({ fileArray }) => {
       });
       setDataDuration({
         labels: [
-          "Travail personnel",
-          "Sorties",
-          "Activités culturelles",
-          "Obligations",
-          "Transports",
-          "Associations",
-          "Inconnu",
+          t("tperso"),
+          t("sortie"),
+          t("culturel"),
+          t("obligation"),
+          t("transport"),
+          t("association"),
+          t("unknown"),
         ],
         datasets: [
           {
@@ -410,15 +412,15 @@ const Classification = ({ fileArray }) => {
             <div className="graph">
               <div className="graphiqueSolo">
                 <Pie data={dataDuration} />
-                <p className="pMargin">Nombre d'heures par catégories</p>
+                <p className="pMargin">{t("nbHoursPerCategory")}</p>
               </div>
               <div className="graphiqueSolo">
                 <Pie data={dataOccurence} />
-                <p className="pMargin">Nombre d'occurences par catégories</p>
+                <p className="pMargin">{t("nbOccurrencePerCategory")}</p>
               </div>
             </div>
           </div>
-          <h3>Détails</h3>
+          <h3>{t("details")}</h3>
           <CollapsibleTable
             fileArray={totalArray}
             key={fileArray[0].name}

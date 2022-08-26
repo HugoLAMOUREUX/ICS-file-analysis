@@ -75,6 +75,10 @@ const Home = () => {
           if (RegExp.$1.trim() in res) {
             res[RegExp.$1.trim()].duration += eventArray[e].durationMiliseconds;
             res[RegExp.$1.trim()].occurence += 1;
+            res[RegExp.$1.trim()].time.push({
+              date: eventArray[e].endDate,
+              duration: eventArray[e].durationMiliseconds,
+            });
             if (RegExp.$3.trim() in res[RegExp.$1.trim()].subEvents) {
               res[RegExp.$1.trim()].subEvents[RegExp.$3.trim()].duration +=
                 eventArray[e].durationMiliseconds;
@@ -88,6 +92,12 @@ const Home = () => {
           } else {
             res[RegExp.$1.trim()] = {
               duration: eventArray[e].durationMiliseconds,
+              time: [
+                {
+                  date: eventArray[e].endDate,
+                  duration: eventArray[e].durationMiliseconds,
+                },
+              ],
               subEvents: {},
               occurence: 1,
             };
@@ -100,10 +110,20 @@ const Home = () => {
           res[eventArray[e].summary.trim()].duration +=
             eventArray[e].durationMiliseconds;
           res[eventArray[e].summary.trim()].occurence += 1;
+          res[eventArray[e].summary.trim()].time.push({
+            date: eventArray[e].endDate,
+            duration: eventArray[e].durationMiliseconds,
+          });
         } else {
           res[eventArray[e].summary.trim()] = {
             duration: eventArray[e].durationMiliseconds,
             subEvents: {},
+            time: [
+              {
+                date: eventArray[e].endDate,
+                duration: eventArray[e].durationMiliseconds,
+              },
+            ],
             occurence: 1,
           };
         }
@@ -113,6 +133,9 @@ const Home = () => {
       res[e].duration /= 1000 * 60 * 60;
       for (let sub in res[e].subEvents) {
         res[e].subEvents[sub].duration /= 1000 * 60 * 60;
+      }
+      for (let time in res[e].time) {
+        res[e].time[time].duration /= 1000 * 60 * 60;
       }
     }
     return res;

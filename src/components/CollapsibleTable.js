@@ -15,10 +15,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { DataContext } from "../contexts/DataContext";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const { t } = useTranslation();
 
   return (
     <React.Fragment>
@@ -49,17 +51,15 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Dont
+                {t("including")}
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
-                    <TableCell align="right">Nombre d'heures</TableCell>
-                    <TableCell align="right">Occurences</TableCell>
-                    <TableCell align="right">
-                      Nombre d'heures par occurence en moyenne
-                    </TableCell>
+                    <TableCell align="right">{t("nbHours")}</TableCell>
+                    <TableCell align="right">{t("nbOccurrence")}</TableCell>
+                    <TableCell align="right">{t("nbHoursPerOcc")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -106,6 +106,8 @@ Row.propTypes = {
 
 export default function CollapsibleTable({ fileArray, sort }) {
   const { subEventsSorted } = useContext(DataContext);
+  const { t } = useTranslation();
+
   React.useEffect(() => {
     if (subEventsSorted == "duration") {
       fileArray.forEach((e) => {
@@ -125,7 +127,6 @@ export default function CollapsibleTable({ fileArray, sort }) {
         });
       });
     }
-    console.log(fileArray);
   }, [fileArray, subEventsSorted]);
   return (
     <TableContainer component={Paper}>
@@ -133,12 +134,10 @@ export default function CollapsibleTable({ fileArray, sort }) {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Activité</TableCell>
-            <TableCell align="right">Nombre d'heures</TableCell>
-            <TableCell align="right">Occurences</TableCell>
-            <TableCell align="right">
-              Nombre d'heures par occurence en moyenne
-            </TableCell>
+            <TableCell>{t("activity")}</TableCell>
+            <TableCell align="right">{t("nbHours")}</TableCell>
+            <TableCell align="right">{t("nbOccurrence")}</TableCell>
+            <TableCell align="right">{t("nbHoursPerOcc")}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

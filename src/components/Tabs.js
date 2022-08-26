@@ -5,11 +5,13 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useEffect, useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { DataContext } from "../contexts/DataContext";
 import CollapsibleTable from "./CollapsibleTable";
 import TextField from "@mui/material/TextField";
 import { latinize } from "../utils/accent";
 import Classification from "./Classification";
+import TimeEvolution from "./TimeEvolution";
 
 export default function Tabs() {
   const [value, setValue] = useState("1");
@@ -20,6 +22,7 @@ export default function Tabs() {
   const { file } = useContext(DataContext);
   const { minDuration } = useContext(DataContext);
   const { minOccurence } = useContext(DataContext);
+  const { t } = useTranslation();
 
   /*
    * Appelé quand on change d'onglet de la nav bar
@@ -133,12 +136,10 @@ export default function Tabs() {
             }}
           >
             <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab
-                label="Classement par nombre d'heures décroissantes"
-                value="1"
-              />
-              <Tab label="Classement par occurence décroissante" value="2" />
-              <Tab label="Classification et analyse" value="3" />
+              <Tab label={t("firstTab")} value="1" />
+              <Tab label={t("secondTab")} value="2" />
+              <Tab label={t("thirdTab")} value="3" />
+              <Tab label={t("fourthTab")} value="4" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -148,7 +149,7 @@ export default function Tabs() {
                 onChange={inputHandler}
                 variant="outlined"
                 fullWidth
-                label="Search"
+                label={t("search")}
               />
             </div>
 
@@ -159,7 +160,7 @@ export default function Tabs() {
                 sort={"duration"}
               />
             ) : (
-              "Merci de sélectionner votre fichier ICS"
+              <p className="pTabs">{t("selectAFile")}</p>
             )}
           </TabPanel>
           <TabPanel value="2">
@@ -169,7 +170,7 @@ export default function Tabs() {
                 onChange={inputHandler}
                 variant="outlined"
                 fullWidth
-                label="Search"
+                label={t("search")}
               />
             </div>
             {fileArray.length > 0 ? (
@@ -179,7 +180,7 @@ export default function Tabs() {
                 sort={"occurence"}
               />
             ) : (
-              "Merci de sélectionner votre fichier ICS"
+              <p className="pTabs">{t("selectAFile")}</p>
             )}
           </TabPanel>
           <TabPanel value="3">
@@ -187,8 +188,13 @@ export default function Tabs() {
               {fileArray.length > 0 ? (
                 <Classification fileArray={fileArray} key={fileArray[0].name} />
               ) : (
-                "Merci de sélectionner votre fichier ICS"
+                <p className="pTabs">{t("selectAFile")}</p>
               )}
+            </div>
+          </TabPanel>
+          <TabPanel value="4">
+            <div>
+              <TimeEvolution />
             </div>
           </TabPanel>
         </TabContext>
