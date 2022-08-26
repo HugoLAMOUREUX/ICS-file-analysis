@@ -2,7 +2,7 @@
   "name": "react-starter",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://HugoLAMOUREUX.github.io/ICS-file-analysis",
+  "homepage": "https://HugoLAMOUREUX.github.io/ICS-file-analysis",
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.3",
