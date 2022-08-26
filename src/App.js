@@ -8,7 +8,7 @@ import Info from "./pages/Info";
 
 function App() {
   return (
-    <BrowserRouter basename="http://HugoLAMOUREUX.github.io/ICS-file-analysis">
+    <BrowserRouter basename="https://HugoLAMOUREUX.github.io/ICS-file-analysis">
       <Routes>
         <Route path="/" element={<Home />} exact></Route>
         <Route path="/info" element={<Info />} exact></Route>
