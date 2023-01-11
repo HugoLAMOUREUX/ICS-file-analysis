@@ -13,8 +13,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { DataContext } from "../contexts/DataContext";
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 function Row(props) {
@@ -26,7 +24,7 @@ function Row(props) {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          {row.subEvents.length == 0 ? (
+          {row.subEvents.length === 0 ? (
             ""
           ) : (
             <IconButton
@@ -105,29 +103,8 @@ Row.propTypes = {
 };
 
 export default function CollapsibleTable({ fileArray, sort }) {
-  const { subEventsSorted } = useContext(DataContext);
   const { t } = useTranslation();
 
-  React.useEffect(() => {
-    if (subEventsSorted == "duration") {
-      fileArray.forEach((e) => {
-        e.subEvents.sort(function compare(a, b) {
-          if (a.duration < b.duration) return 1;
-          if (a.duration > b.duration) return -1;
-          return 0;
-        });
-      });
-    }
-    if (subEventsSorted == "occurence") {
-      fileArray.forEach((e) => {
-        e.subEvents.sort(function compare(a, b) {
-          if (a.occurence < b.occurence) return 1;
-          if (a.occurence > b.occurence) return -1;
-          return 0;
-        });
-      });
-    }
-  }, [fileArray, subEventsSorted]);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -141,7 +118,7 @@ export default function CollapsibleTable({ fileArray, sort }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sort == "duration"
+          {sort === "duration"
             ? fileArray
                 .sort(function compare(a, b) {
                   if (a.duration < b.duration) return 1;

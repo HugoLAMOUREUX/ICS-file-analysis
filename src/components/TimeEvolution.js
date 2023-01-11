@@ -9,7 +9,6 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { t } from "i18next";
 
 const data = [
   {
@@ -63,7 +62,6 @@ export default function TimeEvolution() {
 
   useEffect(() => {
     console.log("in TimeEvolution");
-    console.log(file);
   }, [file]);
   return (
     <div>

@@ -4,126 +4,17 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { DataContext } from "../contexts/DataContext";
 import CollapsibleTable from "./CollapsibleTable";
 import TextField from "@mui/material/TextField";
-import { latinize } from "../utils/accent";
 import Classification from "./Classification";
 import TimeEvolution from "./TimeEvolution";
+import useFilter from "../hooks/useFilter";
 
 export default function Tabs() {
-  const [value, setValue] = useState("1");
-  const [fileArray, setFileArray] = useState([]);
-  const [fileArrayFiltered, setFileArrayFiltered] = useState([]);
-  const [inputText, setInputText] = useState("");
-  const [searchBarUsed, setSearchBarUsed] = useState(false);
-  const { file } = useContext(DataContext);
-  const { minDuration } = useContext(DataContext);
-  const { minOccurence } = useContext(DataContext);
+  const { eventRecapsArrayFiltered, handleChange, inputHandler, value } =
+    useFilter();
   const { t } = useTranslation();
-
-  /*
-   * Appelé quand on change d'onglet de la nav bar
-   */
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    setInputText("");
-    setSearchBarUsed(false);
-  };
-
-  /*
-   * Une fois la barre de recherche utilisée, cette fonction est lancée et permets de stocker le texte rentré dans inputText et de signifier que la barre a été utilisé à travers le searchBarUse à true
-   * @param { Object } évènement
-   */
-  const inputHandler = (e) => {
-    //convert input text to lower case
-    setInputText(e.target.value.toLowerCase().latinize());
-    setSearchBarUsed(true);
-  };
-
-  /*
-   * Converti le dictionnaire en un tableau d'objet avec un champ nampe qui contient l'ancien nom de l'event stocké par clé du dictionnaire, permets aussi de filtrer par occurence et durée minimale
-   * @return { Object[] } RecapTabFiltered
-   */
-  const objectToArray = () => {
-    let res = [];
-    let i = 0;
-
-    Object.keys(file).map((e) => {
-      if (
-        file[e].occurence >= minOccurence &&
-        file[e].duration >= minDuration
-      ) {
-        res.push({
-          name: e,
-          duration: Math.round(file[e].duration * 10) / 10,
-          occurence: file[e].occurence,
-          durPerOccurence:
-            Math.round((file[e].duration * 10) / file[e].occurence) / 10,
-          subEvents: [],
-        });
-        Object.keys(file[e].subEvents).map((sub) => {
-          res[i].subEvents.push({
-            name: sub,
-            duration: Math.round(file[e].subEvents[sub].duration * 10) / 10,
-            occurence: file[e].subEvents[sub].occurence,
-            durPerOccurence:
-              Math.round(
-                (file[e].subEvents[sub].duration * 10) /
-                  file[e].subEvents[sub].occurence
-              ) / 10,
-          });
-        });
-        i += 1;
-      }
-    });
-    return res;
-  };
-
-  /*
-   * Permets de sélectionner les évènements dont leurs noms ou les noms de leurs sous Events contiennent ce qui a été écrit dans la bar de recherche
-   * @return { Object[] } findSearchedEvents
-   */
-  const findSearchedEvents = () => {
-    let res = [];
-    fileArray.map((e) => {
-      let finded = false;
-      if (e.name.toLowerCase().latinize().includes(inputText)) {
-        res.push(e);
-        finded = true;
-      }
-
-      e.subEvents.forEach((element) => {
-        if (
-          element.name.toLowerCase().latinize().includes(inputText) &&
-          !finded
-        ) {
-          res.push(e);
-          finded = true;
-        }
-      });
-    });
-    return res;
-  };
-
-  useEffect(() => {
-    if (!searchBarUsed) {
-      let objToArr = objectToArray(file);
-      setFileArray(objToArr);
-      setFileArrayFiltered(objToArr);
-    } else {
-      setFileArray(objectToArray(file));
-
-      if (inputText != "") {
-        setFileArrayFiltered(findSearchedEvents());
-      } // dans le cas où on a écrit dans la bar de recherche donc barUsed -> true mais qu'on a effacé apres
-      else {
-        setFileArrayFiltered(fileArray);
-      }
-    }
-  }, [file, inputText, searchBarUsed, minOccurence, minDuration]);
 
   return (
     <div className="boxMargin">
@@ -153,10 +44,10 @@ export default function Tabs() {
               />
             </div>
 
-            {fileArray.length > 0 ? (
+            {eventRecapsArrayFiltered.length > 0 ? (
               <CollapsibleTable
-                fileArray={fileArrayFiltered}
-                key={fileArray[0].name}
+                fileArray={eventRecapsArrayFiltered}
+                key={eventRecapsArrayFiltered[0].name}
                 sort={"duration"}
               />
             ) : (
@@ -173,10 +64,10 @@ export default function Tabs() {
                 label={t("search")}
               />
             </div>
-            {fileArray.length > 0 ? (
+            {eventRecapsArrayFiltered.length > 0 ? (
               <CollapsibleTable
-                fileArray={fileArrayFiltered}
-                key={fileArray[0].name}
+                fileArray={eventRecapsArrayFiltered}
+                key={eventRecapsArrayFiltered[0].name}
                 sort={"occurence"}
               />
             ) : (
@@ -185,8 +76,11 @@ export default function Tabs() {
           </TabPanel>
           <TabPanel value="3">
             <div>
-              {fileArray.length > 0 ? (
-                <Classification fileArray={fileArray} key={fileArray[0].name} />
+              {eventRecapsArrayFiltered.length > 0 ? (
+                <Classification
+                  fileArray={eventRecapsArrayFiltered}
+                  key={eventRecapsArrayFiltered[0].name}
+                />
               ) : (
                 <p className="pTabs">{t("selectAFile")}</p>
               )}

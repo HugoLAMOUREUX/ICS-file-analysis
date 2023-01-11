@@ -4,13 +4,13 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { DataContext } from "../../contexts/DataContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 export default function ControlledRadioButtonsGroup() {
-  const [value, setValue] = React.useState("duration");
-  const { setSubEventsSorted } = useContext(DataContext);
+  const [value, setValue] = useState("duration");
+  const { setSubEventsSorted } = useContext(SettingsContext);
   const { t } = useTranslation();
 
   const handleChange = (event) => {
