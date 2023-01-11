@@ -2,11 +2,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useContext } from "react";
-import { DataContext } from "../../contexts/DataContext";
 import { useTranslation } from "react-i18next";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 export default function VerticalSliderDuration() {
-  const { setMinDuration } = useContext(DataContext);
+  const { setMinDuration } = useContext(SettingsContext);
   const { t } = useTranslation();
 
   function preventHorizontalKeyboardNavigation(event) {

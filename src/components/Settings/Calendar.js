@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { DatePicker } from "rsuite";
-import { DataContext } from "../../contexts/DataContext";
 import { useTranslation } from "react-i18next";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 const Calendar = () => {
-  const { setStartDate } = useContext(DataContext);
-  const { setEndDate } = useContext(DataContext);
+  const { setStartDate } = useContext(SettingsContext);
+  const { setEndDate } = useContext(SettingsContext);
   const { t } = useTranslation();
 
   return (

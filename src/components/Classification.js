@@ -86,7 +86,7 @@ const Classification = ({ fileArray }) => {
     fileArray.forEach((element) => {
       let title = {};
       element.name.split(" ").forEach((word) => {
-        if (word != "-") title[word.toLowerCase().latinize()] = 1;
+        if (word !== "-") title[word.toLowerCase().latinize()] = 1;
       });
 
       res.push({
@@ -110,7 +110,7 @@ const Classification = ({ fileArray }) => {
     data.forEach((element) => {
       let intMax = 0;
       let cat = "unknown";
-      Object.keys(element.class).map((nameCat) => {
+      Object.keys(element.class).forEach((nameCat) => {
         if (element.class[nameCat] > 0.28) {
           if (element.class[nameCat] > intMax) {
             intMax = element.class[nameCat];
@@ -146,37 +146,37 @@ const Classification = ({ fileArray }) => {
       culturel: { duration: 0, occurence: 0, event: [] },
     };
     data.forEach((element) => {
-      if (element.class == "sortie") {
+      if (element.class === "sortie") {
         res["sortie"]["occurence"] += element.occurence;
         res["sortie"]["duration"] += element.duration;
         res["sortie"]["event"].push(element.name);
       }
-      if (element.class == "culturel") {
+      if (element.class === "culturel") {
         res["culturel"]["occurence"] += element.occurence;
         res["culturel"]["duration"] += element.duration;
         res["culturel"]["event"].push(element.name);
       }
-      if (element.class == "tperso") {
+      if (element.class === "tperso") {
         res["tperso"]["occurence"] += element.occurence;
         res["tperso"]["duration"] += element.duration;
         res["tperso"]["event"].push(element.name);
       }
-      if (element.class == "obligation") {
+      if (element.class === "obligation") {
         res["obligation"]["occurence"] += element.occurence;
         res["obligation"]["duration"] += element.duration;
         res["obligation"]["event"].push(element.name);
       }
-      if (element.class == "transport") {
+      if (element.class === "transport") {
         res["transport"]["occurence"] += element.occurence;
         res["transport"]["duration"] += element.duration;
         res["transport"]["event"].push(element.name);
       }
-      if (element.class == "association") {
+      if (element.class === "association") {
         res["association"]["occurence"] += element.occurence;
         res["association"]["duration"] += element.duration;
         res["association"]["event"].push(element.name);
       }
-      if (element.class == "unknown") {
+      if (element.class === "unknown") {
         res["unknown"]["occurence"] += element.occurence;
         res["unknown"]["duration"] += element.duration;
         res["unknown"]["event"].push(element.name);
@@ -243,37 +243,37 @@ const Classification = ({ fileArray }) => {
       },
     ];
     data.forEach((element) => {
-      if (element.class == "sortie") {
+      if (element.class === "sortie") {
         res[1]["occurence"] += element.occurence;
         res[1]["duration"] += element.duration;
         res[1]["subEvents"].push(element);
       }
-      if (element.class == "culturel") {
+      if (element.class === "culturel") {
         res[6]["occurence"] += element.occurence;
         res[6]["duration"] += element.duration;
         res[6]["subEvents"].push(element);
       }
-      if (element.class == "tperso") {
+      if (element.class === "tperso") {
         res[0]["occurence"] += element.occurence;
         res[0]["duration"] += element.duration;
         res[0]["subEvents"].push(element);
       }
-      if (element.class == "obligation") {
+      if (element.class === "obligation") {
         res[3]["occurence"] += element.occurence;
         res[3]["duration"] += element.duration;
         res[3]["subEvents"].push(element);
       }
-      if (element.class == "transport") {
+      if (element.class === "transport") {
         res[4]["occurence"] += element.occurence;
         res[4]["duration"] += element.duration;
         res[4]["subEvents"].push(element);
       }
-      if (element.class == "association") {
+      if (element.class === "association") {
         res[2]["occurence"] += element.occurence;
         res[2]["duration"] += element.duration;
         res[2]["subEvents"].push(element);
       }
-      if (element.class == "unknown") {
+      if (element.class === "unknown") {
         res[5]["occurence"] += element.occurence;
         res[5]["duration"] += element.duration;
         res[5]["subEvents"].push(element);
@@ -287,13 +287,13 @@ const Classification = ({ fileArray }) => {
   };
 
   useEffect(() => {
-    if (reload == 0) {
+    if (reload === 0) {
       setTotalArray(totalPerClassArray(attributeOneClass(classify())));
       setTotal(totalPerClass(attributeOneClass(classify())));
 
       setReload(1);
     }
-    if (reload == 1) {
+    if (reload === 1) {
       setReload(2);
       setDataOccurence({
         labels: [
@@ -384,7 +384,7 @@ const Classification = ({ fileArray }) => {
         ],
       });
     }
-    if (reload == 2) {
+    if (reload === 2) {
       setReload(3);
     }
   }, [

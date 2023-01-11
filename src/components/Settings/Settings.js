@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { DataContext } from "../../contexts/DataContext";
 
 import VerticalSliderDuration from "./VerticalSliderDuration";
 import VerticalSliderOccurence from "./VerticalSliderOccurence";
@@ -13,16 +12,10 @@ import CloudUpload from "@mui/icons-material/CloudUpload";
 import HelpIcon from "@mui/icons-material/Help";
 
 import { useTranslation } from "react-i18next";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 const Settings = () => {
-  const {
-    setMinDuration,
-    setMinOccurence,
-    setStartDate,
-    setEndDate,
-    setSubEventsSorted,
-    setSelectedFile,
-  } = useContext(DataContext);
+  const { setSelectedFile } = useContext(SettingsContext);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -61,7 +54,9 @@ const Settings = () => {
               hidden
               accept=".ics"
               type="file"
-              onChange={(e) => setSelectedFile(e.target.files[0])}
+              onChange={(e) => {
+                setSelectedFile(e.target.files[0]);
+              }}
             />
           </Button>
           <IconButton
@@ -73,7 +68,9 @@ const Settings = () => {
               hidden
               accept=".ics"
               type="file"
-              onChange={(e) => setSelectedFile(e.target.files[0])}
+              onChange={(e) => {
+                setSelectedFile(e.target.files[0]);
+              }}
             />
             <CloudUpload />
           </IconButton>
