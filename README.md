@@ -4,6 +4,8 @@ This application allows you to see a recap of your ICS files (calendars). You ca
 
 The application is available in french and english. The question mark on the top of the website leads you to a short tutorial on the app.
 
+The application is available at https://HugoLAMOUREUX.github.io/ICS-file-analysis/
+
 ## For developers
 
 You can clone the repo, and then run the following commands to launch the web application.
