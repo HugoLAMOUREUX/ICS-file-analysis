@@ -8,7 +8,7 @@ import { SettingsContextProvider } from "./components/Settings/SettingsContextPr
 function App() {
   return (
     <SettingsContextProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Home />} exact></Route>
           <Route path="/info" element={<Info />} exact></Route>

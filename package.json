@@ -2,7 +2,7 @@
   "name": "react-starter",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://HugoLAMOUREUX.github.io/",
+  "homepage": "https://HugoLAMOUREUX.github.io",
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.3",
