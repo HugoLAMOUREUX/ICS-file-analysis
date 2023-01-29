@@ -10,6 +10,7 @@ The application is available at https://HugoLAMOUREUX.github.io/ICS-file-analysi
 
 You can clone the repo, and then run the following commands to launch the web application.
 ```
+cd front
 npm i
 npm start
 ```
