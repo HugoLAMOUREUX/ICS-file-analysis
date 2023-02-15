@@ -3,16 +3,38 @@
     justify-content: center;
     align-items: center;
     position:relative;
+    flex-wrap: wrap;
     
 }
 .lSelector{
-    right: 5%;
     padding:5px;
-    position:absolute;
-    top:50%;
-    transform:translate(-50%,-5%)
+    align-self: flex-end;
+    margin-left: auto;    
+    margin-right: 45px;
 }
 .helpIcon{
     margin-top: 15px;
     margin-left: 10px;
+}
+
+h6{
+    margin-left: auto;
+    padding-left:45px;
+}
+
+@media (max-width: 690px) {
+.lSelector{
+    margin:0;
+}
+h6{
+    margin-left: 0;
+    padding-left:0px;
+}
+}
+
+
+.selection{
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }

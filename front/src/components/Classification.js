@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CollapsibleTable from "./CollapsibleTable";
+import { SettingsContext } from "../contexts/SettingsContext";
 
 const { NeuralNetwork } = require("@nlpjs/neural");
 const corpus = require("./corpus.json");
@@ -11,6 +12,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Classification = ({ fileArray }) => {
   const { t } = useTranslation();
+  const { subEventsSorted } = useContext(SettingsContext);
   const [total, setTotal] = useState({
     tperso: { duration: 0, occurence: 0 },
     culturel: { duration: 0, occurence: 0 },
@@ -18,6 +20,7 @@ const Classification = ({ fileArray }) => {
     obligation: { duration: 0, occurence: 0 },
     association: { duration: 0, occurence: 0 },
     transport: { duration: 0, occurence: 0 },
+    work: { duration: 0, occurence: 0 },
     unknown: { duration: 0, occurence: 0 },
   });
   const [totalArray, setTotalArray] = useState([
@@ -65,6 +68,13 @@ const Classification = ({ fileArray }) => {
     },
     {
       name: "Culturel",
+      duration: 0,
+      occurence: 0,
+      durPerOccurence: 0,
+      subEvents: [],
+    },
+    {
+      name: "Travail",
       duration: 0,
       occurence: 0,
       durPerOccurence: 0,
@@ -144,6 +154,7 @@ const Classification = ({ fileArray }) => {
       transport: { duration: 0, occurence: 0, event: [] },
       unknown: { duration: 0, occurence: 0, event: [] },
       culturel: { duration: 0, occurence: 0, event: [] },
+      work: { duration: 0, occurence: 0, event: [] },
     };
     data.forEach((element) => {
       if (element.class === "sortie") {
@@ -175,6 +186,11 @@ const Classification = ({ fileArray }) => {
         res["association"]["occurence"] += element.occurence;
         res["association"]["duration"] += element.duration;
         res["association"]["event"].push(element.name);
+      }
+      if (element.class === "work") {
+        res["work"]["occurence"] += element.occurence;
+        res["work"]["duration"] += element.duration;
+        res["work"]["event"].push(element.name);
       }
       if (element.class === "unknown") {
         res["unknown"]["occurence"] += element.occurence;
@@ -241,6 +257,13 @@ const Classification = ({ fileArray }) => {
         durPerOccurence: 0,
         subEvents: [],
       },
+      {
+        name: "Travail",
+        duration: 0,
+        occurence: 0,
+        durPerOccurence: 0,
+        subEvents: [],
+      },
     ];
     data.forEach((element) => {
       if (element.class === "sortie") {
@@ -273,6 +296,11 @@ const Classification = ({ fileArray }) => {
         res[2]["duration"] += element.duration;
         res[2]["subEvents"].push(element);
       }
+      if (element.class === "work") {
+        res[7]["occurence"] += element.occurence;
+        res[7]["duration"] += element.duration;
+        res[7]["subEvents"].push(element);
+      }
       if (element.class === "unknown") {
         res[5]["occurence"] += element.occurence;
         res[5]["duration"] += element.duration;
@@ -280,8 +308,27 @@ const Classification = ({ fileArray }) => {
       }
     });
     res.forEach((e) => {
-      e.durPerOccurence = Math.round((e.duration * 10) / e.occurence) / 10;
+      e.durPerOccurence =
+        Math.round((e.duration * 10) / (e.occurence ? e.occurence : 1)) / 10;
       e.duration = Math.round(e.duration * 10) / 10;
+      if (subEventsSorted === "duration") {
+        res.forEach((e) => {
+          e.subEvents.sort(function compare(a, b) {
+            if (a.duration < b.duration) return 1;
+            if (a.duration > b.duration) return -1;
+            return 0;
+          });
+        });
+      }
+      if (subEventsSorted === "occurence") {
+        res.forEach((e) => {
+          e.subEvents.sort(function compare(a, b) {
+            if (a.occurence < b.occurence) return 1;
+            if (a.occurence > b.occurence) return -1;
+            return 0;
+          });
+        });
+      }
     });
     return res;
   };
@@ -298,6 +345,7 @@ const Classification = ({ fileArray }) => {
       setDataOccurence({
         labels: [
           t("tperso"),
+          t("work"),
           t("sortie"),
           t("culturel"),
           t("obligation"),
@@ -310,6 +358,7 @@ const Classification = ({ fileArray }) => {
             label: "# of Votes",
             data: [
               total["tperso"]["occurence"],
+              total["work"]["occurence"],
               total["sortie"]["occurence"],
               total["culturel"]["occurence"],
               total["obligation"]["occurence"],
@@ -319,6 +368,7 @@ const Classification = ({ fileArray }) => {
             ],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
+              "rgba(167,155,142, 0.2)",
               "rgba(144,238,144, 0.2)",
               "rgba(255, 206, 86, 0.2)",
               "rgba(128,0,128, 0.2)",
@@ -328,6 +378,7 @@ const Classification = ({ fileArray }) => {
             ],
             borderColor: [
               "rgba(54, 162, 235, 1)",
+              "rgba(167,155,142, 1)",
               "rgba(144,238,144, 1)",
               "rgba(255, 206, 86, 1)",
               "rgba(128,0,128, 1)",
@@ -342,6 +393,7 @@ const Classification = ({ fileArray }) => {
       setDataDuration({
         labels: [
           t("tperso"),
+          t("work"),
           t("sortie"),
           t("culturel"),
           t("obligation"),
@@ -354,6 +406,7 @@ const Classification = ({ fileArray }) => {
             label: "# of Votes",
             data: [
               total["tperso"]["duration"],
+              total["work"]["duration"],
               total["sortie"]["duration"],
               total["culturel"]["duration"],
               total["obligation"]["duration"],
@@ -363,6 +416,7 @@ const Classification = ({ fileArray }) => {
             ],
             backgroundColor: [
               "rgba(54, 162, 235, 0.2)",
+              "rgba(167,155,142, 0.2)",
               "rgba(144,238,144, 0.2)",
               "rgba(255, 206, 86, 0.2)",
               "rgba(128,0,128, 0.2)",
@@ -372,6 +426,7 @@ const Classification = ({ fileArray }) => {
             ],
             borderColor: [
               "rgba(54, 162, 235, 1)",
+              "rgba(167,155,142, 1)",
               "rgba(144,238,144, 1)",
               "rgba(255, 206, 86, 1)",
               "rgba(128,0,128, 1)",
@@ -389,6 +444,7 @@ const Classification = ({ fileArray }) => {
     }
   }, [
     total["tperso"]["duration"],
+    total["work"]["duration"],
     total["sortie"]["duration"],
     total["culturel"]["duration"],
     total["obligation"]["duration"],
@@ -402,6 +458,7 @@ const Classification = ({ fileArray }) => {
     totalArray[4]["duration"],
     totalArray[5]["duration"],
     totalArray[6]["duration"],
+    totalArray[7]["duration"],
   ]);
 
   return (

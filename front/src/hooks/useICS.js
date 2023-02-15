@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
-import icsToJson from "ics-to-json-extended";
 import { icsDateToGoodDate } from "../utils/IcsDateToGoodDate";
 import { useState } from "react";
 
@@ -20,7 +19,8 @@ const useICS = () => {
     // le fichier est déja la en tant que fichier
     const icsData = await fileLocation.text();
     // Convert
-    const data = icsToJson(icsData);
+    var ical2json = require("ical2json");
+    const data = ical2json.convert(icsData);
 
     return data;
   };
@@ -34,12 +34,22 @@ const useICS = () => {
     let res = [];
     if (selectedFile != null) {
       arrayEvent = await myConvert(selectedFile);
-      arrayEvent.forEach((e) => {
-        let start = icsDateToGoodDate(e.startDate);
-        let end = icsDateToGoodDate(e.endDate);
+      arrayEvent["VCALENDAR"][0]["VEVENT"].forEach((e) => {
+        let start = 0;
+        let end = 0;
+        if (e.DTSTART) {
+          start = icsDateToGoodDate(e.DTSTART);
+          end = icsDateToGoodDate(e.DTEND);
+        } else {
+          if (e["DTSTART;TZID=Europe/Paris"]) {
+            start = icsDateToGoodDate(e["DTSTART;TZID=Europe/Paris"]);
+            end = icsDateToGoodDate(e["DTEND;TZID=Europe/Paris"]);
+          }
+        }
         e.startDate = start;
         e.endDate = end;
-        e.durationMiliseconds = Math.abs(e.endDate - e.startDate);
+        e.summary = e.SUMMARY;
+        e.durationMiliseconds = Math.abs(e.startDate - e.endDate);
         if (endDate - end > 0 && start - startDate > 0) {
           res.push(e);
         }

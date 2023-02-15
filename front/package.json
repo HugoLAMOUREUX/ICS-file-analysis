@@ -2,7 +2,7 @@
   "name": "react-starter",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://HugoLAMOUREUX.github.io",
+  "homepage": "https://HugoLAMOUREUX.github.io/",
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.3",
@@ -21,6 +21,7 @@
     "hammerjs": "^2.0.8",
     "i18next": "^21.9.1",
     "i18next-browser-languagedetector": "^6.1.5",
+    "ical2json": "^3.1.2",
     "ics-to-json": "^1.0.0",
     "ics-to-json-extended": "^1.1.2",
     "moment": "^2.29.4",

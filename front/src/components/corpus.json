@@ -735,5 +735,9 @@
   {
     "input": { "lhc": 1 },
     "output": { "tperso": 1 }
+  },
+  {
+    "input": { "travail": 1 },
+    "output": { "work": 1 }
   }
 ]
