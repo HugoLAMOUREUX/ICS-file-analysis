@@ -16,6 +16,8 @@ The application is available in french and english. The question mark on the top
 
 The application is available at https://HugoLAMOUREUX.github.io/ICS-file-analysis/
 
+<br>
+
 ###  Built With
 
 This app has been built with React.JS for the front-end, Node.JS for the back-end and mongoDB for the database.
