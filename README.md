@@ -77,8 +77,6 @@ Hugo LAMOUREUX - hugo.lamoureux18@gmail.com - [Linkedin](https://www.linkedin.co
 
 Project Link: [https://github.com/HugoLAMOUREUX/ICS-file-analysis](https://github.com/HugoLAMOUREUX/ICS-file-analysis)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- MARKDOWN LINKS & IMAGES -->
 
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
