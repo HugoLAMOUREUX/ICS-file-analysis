@@ -56,9 +56,7 @@ npm start
 
 ##  Usage
 
-Please see the documentation to understand how to use the application : https://hugolamoureux.github.io/ICS-file-analysis/info
-
-You can also click on the question mark available on the top of the web page : https://hugolamoureux.github.io/ICS-file-analysis/
+You can test the app here and you can also click on the question mark available on the top of the web page to get some documentation on how to use it : https://hugolamoureux.github.io/ICS-file-analysis/
 
 ## Deployment
 
